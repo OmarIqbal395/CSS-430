@@ -1,0 +1,2 @@
+Options: 
+CMake: 3.7.1@/home/thuan/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/171.3780.103/bin/cmake/bin/cmake
