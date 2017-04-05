@@ -1,15 +1,28 @@
-package com.company.Program1;
 
-public class Shell
+
+public class Shell extends Thread
 {
 
-    public static void main(String[] args)
+   public Shell()
+   {
 
+   }
+   public void run()
+   {
+   	int status = 1;
+   	while(true)
 	{
-		if (args.length == 1)
+		String command = "";
+		SysLib.cout ( "shell[" + status + "]%" );
+		SysLib.cin(command);
+		String[] result = SysLib.stringToArgs( command);
+		for (String s : result)
 		{
-			System.err.println( "No Argument");
+
 		}
 
-    }
+
+	}
+   }
+
 }
