@@ -81,9 +81,6 @@ int main(int argc , char *argv[])
         }
         else
         {
-
-            //            The child
-            // Why couldnt put wait here ?
             close(fileD1[ 0 ]); // We are done with the 1st pipe
             close(fileD1[ 1 ]);
             close(fileD2[ 1 ]);// close write of the second pipe
