@@ -1,20 +1,21 @@
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Disk extends Thread {
     public static final int blockSize = 512;
     private final int trackSize = 10;
     private final int transferTime = 20;
     private final int delayPerTrack = 1;
-    private int diskSize;
-
-    private byte data[];
-
-    private int command;
     private final int IDLE = 0;
     private final int READ = 1;
     private final int WRITE = 2;
     private final int SYNC = 3;
-    private boolean readyBuffer;
+	private int diskSize;
+	private byte data[];
+	private int command;
+	private boolean readyBuffer;
 
     private byte[] buffer;
     private int currentBlockId;
@@ -95,11 +96,8 @@ public class Disk extends Thread {
     }
 
     public synchronized boolean testReady( ) {
-	if ( command == IDLE && readyBuffer == true ) {
-	    return true;
-	} else
-	    return false;
-    }
+		return command == IDLE && readyBuffer == true;
+	}
 
     private synchronized void waitCommand( ) {
 	while ( command == IDLE ) {

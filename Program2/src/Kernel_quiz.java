@@ -1,6 +1,8 @@
-import java.util.*;
-import java.lang.reflect.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class Kernel
 {
@@ -44,19 +46,15 @@ public class Kernel
     // Return values
     public final static int OK = 0;
     public final static int ERROR = -1;
-
+    private final static int COND_DISK_REQ = 1; // wait condition
+    private final static int COND_DISK_FIN = 2; // wait condition
     // System thread references
     private static Scheduler scheduler;
     private static Disk disk;
     private static Cache cache;
-
     // Synchronized Queues
     private static SyncQueue waitQueue;  // for threads to wait for their child
     private static SyncQueue ioQueue;    // I/O queue
-
-    private final static int COND_DISK_REQ = 1; // wait condition 
-    private final static int COND_DISK_FIN = 2; // wait condition
-
     // Standard input
     private static BufferedReader input
 	= new BufferedReader( new InputStreamReader( System.in ) );
@@ -77,7 +75,7 @@ public class Kernel
 		disk.start( );
 
 		// instantiate a cache memory
-		cache = new Cache( disk.blockSize, 10 );
+            cache = new Cache(Disk.blockSize, 10);
 
 		// instantiate synchronized queues
 		ioQueue = new SyncQueue( );
@@ -213,8 +211,8 @@ public class Kernel
 		Object[] constructorArgs = new Object[] { thrArgs };
 
 		// locate this class object's constructors
-		Constructor thrConst 
-		    = thrClass.getConstructor( new Class[] {String[].class} );
+		Constructor thrConst
+                = thrClass.getConstructor(String[].class);
 
 		// instantiate this class object by calling this constructor
                 // with arguments

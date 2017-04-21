@@ -1,25 +1,47 @@
-import java.util.*;
+import java.util.Vector;
 
 public class Scheduler extends Thread
 {
+    private static final int DEFAULT_TIME_SLICE = 1000;
+    private static final int DEFAULT_MAX_THREADS = 10000;
     private Vector queue;
     private int timeSlice;
-    private static final int DEFAULT_TIME_SLICE = 1000;
-
-    // New data added to p161 
+    // New data added to p161
     private boolean[] tids; // Indicate which ids have been used
-    private static final int DEFAULT_MAX_THREADS = 10000;
-
-    // A new feature added to p161 
+    // A new feature added to p161
     // Allocate an ID array, each element indicating if that id has been used
     private int nextId = 0;
+
+    public Scheduler()
+    {
+        timeSlice = DEFAULT_TIME_SLICE;
+        queue = new Vector();
+        initTid(DEFAULT_MAX_THREADS);
+    }
+
+    public Scheduler(int quantum)
+    {
+        timeSlice = quantum;
+        queue = new Vector();
+        initTid(DEFAULT_MAX_THREADS);
+    }
+
+    // A new feature added to p161
+    // A constructor to receive the max number of threads to be spawned
+    public Scheduler(int quantum, int maxThreads)
+    {
+        timeSlice = quantum;
+        queue = new Vector();
+        initTid(maxThreads);
+    }
+
     private void initTid( int maxThreads ) {
         tids = new boolean[maxThreads];
         for ( int i = 0; i < maxThreads; i++ )
             tids[i] = false;
     }
 
-    // A new feature added to p161 
+    // A new feature added to p161
     // Search an available thread ID and provide a new thread with this ID
     private int getNewTid( ) {
         for ( int i = 0; i < tids.length; i++ ) {
@@ -33,7 +55,7 @@ public class Scheduler extends Thread
         return -1;
     }
 
-    // A new feature added to p161 
+    // A new feature added to p161
     // Return the thread ID and set the corresponding tids element to be unused
     private boolean returnTid( int tid ) {
         if ( tid >= 0 && tid < tids.length && tids[tid] == true ) {
@@ -43,7 +65,7 @@ public class Scheduler extends Thread
         return false;
     }
 
-    // A new feature added to p161 
+    // A new feature added to p161
     // Retrieve the current thread's TCB from the queue
     public TCB getMyTcb( ) {
         Thread myThread = Thread.currentThread( ); // Get my thread object
@@ -58,30 +80,10 @@ public class Scheduler extends Thread
         return null;
     }
 
-    // A new feature added to p161 
+    // A new feature added to p161
     // Return the maximal number of threads to be spawned in the system
     public int getMaxThreads( ) {
         return tids.length;
-    }
-
-    public Scheduler( ) {
-        timeSlice = DEFAULT_TIME_SLICE;
-        queue = new Vector( );
-        initTid( DEFAULT_MAX_THREADS );
-    }
-
-    public Scheduler( int quantum ) {
-        timeSlice = quantum;
-        queue = new Vector( );
-        initTid( DEFAULT_MAX_THREADS );
-    }
-
-    // A new feature added to p161 
-    // A constructor to receive the max number of threads to be spawned
-    public Scheduler( int quantum, int maxThreads ) {
-        timeSlice = quantum;
-        queue = new Vector( );
-        initTid( maxThreads );
     }
 
     private void schedulerSleep( ) {
@@ -179,7 +181,9 @@ public class Scheduler extends Thread
                     queue.remove( currentTCB ); // rotate this TCB to the end
                     queue.add( currentTCB );
                 }
-            } catch ( NullPointerException e3 ) { };
+            } catch (NullPointerException e3)
+            {
+            }
         }
     }
 }
