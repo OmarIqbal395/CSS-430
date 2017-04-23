@@ -245,7 +245,7 @@ public class Scheduler extends Thread
      * @param none
      * @none none
      */
-    private synchronized void executeFirstQueue()
+    private void executeFirstQueue()
     {
         Thread current = null;
         if (firstQueue.size() != 0)
@@ -266,12 +266,12 @@ public class Scheduler extends Thread
                     current.resume();
                     if (current.isAlive())
                     {
-                        current.setPriority(4);
+                  //      current.setPriority(4);
                     } else
                     {
                         {
                             current.start();
-                            current.setPriority(4);
+                 //           current.setPriority(4);
                         }
                     }
                 } else
@@ -287,7 +287,7 @@ public class Scheduler extends Thread
                         // At this time, the thread has not finish even though the time has passed
                         // Move it to another queue
                         current.suspend();
-                        current.setPriority(2);
+              //          current.setPriority(2);
                     }
                     firstQueue.remove(currentTCB);
                     secondQueue.add(currentTCB);
@@ -304,7 +304,7 @@ public class Scheduler extends Thread
      * @param none
      * @return none
      */
-    private synchronized void executeSecondQueue()
+    private void executeSecondQueue()
     {
         // Same like executeFirstQueue(): get the TCB, check if it is ok, execute it...
         Thread current = null;
@@ -326,12 +326,12 @@ public class Scheduler extends Thread
                     if (current.isAlive())
                     {
                         current.resume();
-                        current.setPriority(4);
+                   //     current.setPriority(4);
                     } else
                     {
 
                         current.start();
-                        current.setPriority(4);
+                   //     current.setPriority(4);
 
                     }
                 } else
@@ -356,7 +356,7 @@ public class Scheduler extends Thread
                     {
                         // Not yet finish, go to third queue
                         current.suspend();
-                        current.setPriority(2);
+               //         current.setPriority(2);
                     }
                     secondQueue.remove(currentTCB);
                     thirdQueue.add(currentTCB);
@@ -373,7 +373,7 @@ public class Scheduler extends Thread
      * @param none
      * @return none
      */
-    private synchronized void executeThirdQueue()
+    private void executeThirdQueue()
     {
         Thread current = null;
         if (thirdQueue.size() != 0)
@@ -394,11 +394,11 @@ public class Scheduler extends Thread
                     if (current.isAlive())
                     {
                         current.resume();
-                        current.setPriority(4);
+               //         current.setPriority(4);
                     } else
                     {
                         current.start();
-                        current.setPriority(4);
+                 //       current.setPriority(4);
 
                     }
                 } else
@@ -429,7 +429,7 @@ public class Scheduler extends Thread
                     {
                         // Not yet finished, move to the tail of the Queue
                         current.suspend();
-                        current.setPriority(2);
+              //          current.setPriority(2);
                     }
                     thirdQueue.remove(currentTCB); // rotate this TCB to the end
                     thirdQueue.add(currentTCB);
@@ -446,7 +446,7 @@ public class Scheduler extends Thread
      */
     public void run()
     {
-        this.setPriority(6);
+      //  this.setPriority(6);
 
         while (true)
         {
