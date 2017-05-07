@@ -1,4 +1,3 @@
-import java.util.*;
 import java.lang.reflect.*;
 import java.io.*;
 
@@ -87,7 +86,7 @@ public class Kernel
 		return sysExec( ( String[] )args );
 	    case WAIT:
 			myTcb = scheduler.getMyTcb();
-			return waitQueue.enqueAndSleep(myTcb.getTid());
+			return waitQueue.enqueueAndSleep(myTcb.getTid());
 
 
 	    case EXIT:
@@ -104,21 +103,22 @@ public class Kernel
 		return OK;
 	    case RAWREAD: // read a block of data from disk
 		while ( disk.read( param, ( byte[] )args ) == false )
-		    ; // busy wait
+			ioQueue.enqueueAndSleep(COND_DISK_REQ);   // relinquish CPU to another ready
+
 		while ( disk.testAndResetReady( ) == false )
-		    ; // busy wait
+			ioQueue.enqueueAndSleep(COND_DISK_FIN); // relinquish CPU to another ready threa
 		return OK;
 	    case RAWWRITE: // write a block of data to disk
 		while ( disk.write( param, ( byte[] )args ) == false )
-		    ; // busy wait
+			ioQueue.enqueueAndSleep(COND_DISK_REQ); // relinquish CPU to another ready threa
 		while ( disk.testAndResetReady( ) == false )
-		    ; // busy wait
+			ioQueue.enqueueAndSleep(COND_DISK_FIN); // relinquish CPU to another ready threa
 		return OK;
 	    case SYNC:     // synchronize disk data to a real file
 		while ( disk.sync( ) == false )
-		    ; // busy wait
+			ioQueue.enqueueAndSleep(COND_DISK_REQ); // relinquish CPU to another ready threa
 		while ( disk.testAndResetReady( ) == false )
-		    ; // busy wait
+			ioQueue.enqueueAndSleep(COND_DISK_FIN); // relinquish CPU to another ready threa
 		return OK;
 	    case READ:
 		switch ( param ) {

@@ -50,7 +50,7 @@ public class SyncQueue
      * @param condition The condition that the thread will sleep
      * @return an integer that is the ID of the thread that has woken up the calling thread
      */
-    public int enqueAndSleep(int condition)
+    public int enqueueAndSleep(int condition)
     {
 
         return queue[condition].sleep();
