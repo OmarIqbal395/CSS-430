@@ -22,19 +22,17 @@ public class Test3 extends Thread
             SysLib.exec(first);
             SysLib.exec(second);
         }
+
         // Wait for termination of twice the number of Pairs
-        for (int i = 0; i < numberOfPairs; i++)
-        {
-            SysLib.join();
-        }
-        for (int i = 0; i < numberOfPairs; i++)
+        for (int i = 0; i < numberOfPairs * 2; i++)
         {
             SysLib.join();
         }
 
+
         long end = new Date().getTime();
         long result = end - start;
-        SysLib.cout("The elapsed time is " + result + " ms");
+        SysLib.cout("The elapsed time is " + result + " ms" + "\n");
         SysLib.exit();
 
 

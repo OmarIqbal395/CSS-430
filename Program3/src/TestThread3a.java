@@ -16,6 +16,6 @@ public class TestThread3a extends Thread
 
         }
         SysLib.cout("After 10 loops, the number " + initial + " has become " + random + "\n");
-
+        SysLib.exit();
     }
 }
