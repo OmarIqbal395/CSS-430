@@ -52,8 +52,8 @@ public class SyncQueue
      */
     public int enqueAndSleep(int condition)
     {
-        QueueNode newNode = queue[condition];
-        return newNode.sleep();
+
+        return queue[condition].sleep();
 
     }
 
@@ -64,8 +64,9 @@ public class SyncQueue
      */
     public void dequeueAndWakeup(int condition)
     {
-        QueueNode toBeWake = queue[condition];
-        toBeWake.wake(0);
+
+        queue[condition].wake(0);
+
     }
 
     /**
@@ -76,8 +77,10 @@ public class SyncQueue
      */
     public void dequeueAndWakeup(int condition, int tid)
     {
-        QueueNode toBeWake = queue[condition];
-        toBeWake.wake(tid);
+
+        queue[condition].wake(tid);
+
+
     }
 
 

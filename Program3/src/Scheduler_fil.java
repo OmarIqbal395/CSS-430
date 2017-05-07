@@ -179,7 +179,9 @@ public class Scheduler extends Thread
                     queue.remove( currentTCB ); // rotate this TCB to the end
                     queue.add( currentTCB );
                 }
-            } catch ( NullPointerException e3 ) { };
+            } catch (NullPointerException e3)
+            {
+            }
         }
     }
 }

@@ -77,7 +77,7 @@ public class Kernel
 		disk.start( );
 
 		// instantiate a cache memory
-		cache = new Cache( disk.blockSize, 10 );
+            cache = new Cache(Disk.blockSize, 10);
 
 		// instantiate synchronized queues
 		ioQueue = new SyncQueue( );
@@ -213,8 +213,8 @@ public class Kernel
 		Object[] constructorArgs = new Object[] { thrArgs };
 
 		// locate this class object's constructors
-		Constructor thrConst 
-		    = thrClass.getConstructor( new Class[] {String[].class} );
+		Constructor thrConst
+                = thrClass.getConstructor(String[].class);
 
 		// instantiate this class object by calling this constructor
                 // with arguments

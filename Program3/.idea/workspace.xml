@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e24414c-48d1-42fa-9102-bcb0f3223ce4" name="Default" comment="" />
+    <list default="true" id="7e24414c-48d1-42fa-9102-bcb0f3223ce4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Boot.class" afterPath="$PROJECT_DIR$/src/Boot.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cache$Entry.class" afterPath="$PROJECT_DIR$/src/Cache$Entry.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cache.class" afterPath="$PROJECT_DIR$/src/Cache.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Directory.class" afterPath="$PROJECT_DIR$/src/Directory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FileSystem.class" afterPath="$PROJECT_DIR$/src/FileSystem.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FileTable.class" afterPath="$PROJECT_DIR$/src/FileTable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FileTableEntry.class" afterPath="$PROJECT_DIR$/src/FileTableEntry.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloWorld.class" afterPath="$PROJECT_DIR$/src/HelloWorld.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Inode.class" afterPath="$PROJECT_DIR$/src/Inode.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Kernel.class" afterPath="$PROJECT_DIR$/src/Kernel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Kernel_org.class" afterPath="$PROJECT_DIR$/src/Kernel_org.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Loader.class" afterPath="$PROJECT_DIR$/src/Loader.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PingPong.class" afterPath="$PROJECT_DIR$/src/PingPong.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/QueueNode.class" afterPath="$PROJECT_DIR$/src/QueueNode.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Scheduler.class" afterPath="$PROJECT_DIR$/src/Scheduler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Shell.class" afterPath="$PROJECT_DIR$/src/Shell.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SuperBlock.class" afterPath="$PROJECT_DIR$/src/SuperBlock.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SyncQueue.class" afterPath="$PROJECT_DIR$/src/SyncQueue.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TCB.class" afterPath="$PROJECT_DIR$/src/TCB.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2.class" afterPath="$PROJECT_DIR$/src/Test2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2b.class" afterPath="$PROJECT_DIR$/src/Test2b.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2c.class" afterPath="$PROJECT_DIR$/src/Test2c.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2d.class" afterPath="$PROJECT_DIR$/src/Test2d.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2e.class" afterPath="$PROJECT_DIR$/src/Test2e.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test3.class" afterPath="$PROJECT_DIR$/src/Test3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test4.class" afterPath="$PROJECT_DIR$/src/Test4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test5.class" afterPath="$PROJECT_DIR$/src/Test5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test6.class" afterPath="$PROJECT_DIR$/src/Test6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test7.class" afterPath="$PROJECT_DIR$/src/Test7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test7a.class" afterPath="$PROJECT_DIR$/src/Test7a.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestPingPong.class" afterPath="$PROJECT_DIR$/src/TestPingPong.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread1.class" afterPath="$PROJECT_DIR$/src/TestThread1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2.class" afterPath="$PROJECT_DIR$/src/TestThread2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2b.class" afterPath="$PROJECT_DIR$/src/TestThread2b.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2c.class" afterPath="$PROJECT_DIR$/src/TestThread2c.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2d.class" afterPath="$PROJECT_DIR$/src/TestThread2d.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread3.class" afterPath="$PROJECT_DIR$/src/TestThread3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Boot.java" afterPath="$PROJECT_DIR$/src/Boot.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FileTableEntry.java" afterPath="$PROJECT_DIR$/src/FileTableEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HelloWorld.java" afterPath="$PROJECT_DIR$/src/HelloWorld.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Kernel.java" afterPath="$PROJECT_DIR$/src/Kernel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Kernel_quiz.java" afterPath="$PROJECT_DIR$/src/Kernel_quiz.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Loader.java" afterPath="$PROJECT_DIR$/src/Loader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PingPong.java" afterPath="$PROJECT_DIR$/src/PingPong.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Scheduler.java" afterPath="$PROJECT_DIR$/src/Scheduler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Scheduler_fil.java" afterPath="$PROJECT_DIR$/src/Scheduler_fil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SyncQueue.java" afterPath="$PROJECT_DIR$/src/SyncQueue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TCB.java" afterPath="$PROJECT_DIR$/src/TCB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2.java" afterPath="$PROJECT_DIR$/src/Test2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2b.java" afterPath="$PROJECT_DIR$/src/Test2b.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2c.java" afterPath="$PROJECT_DIR$/src/Test2c.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2d.java" afterPath="$PROJECT_DIR$/src/Test2d.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test2e.java" afterPath="$PROJECT_DIR$/src/Test2e.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test5.java" afterPath="$PROJECT_DIR$/src/Test5.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test6.java" afterPath="$PROJECT_DIR$/src/Test6.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test7.java" afterPath="$PROJECT_DIR$/src/Test7.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test7a.java" afterPath="$PROJECT_DIR$/src/Test7a.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestPingPong.java" afterPath="$PROJECT_DIR$/src/TestPingPong.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread1.java" afterPath="$PROJECT_DIR$/src/TestThread1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2.java" afterPath="$PROJECT_DIR$/src/TestThread2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2b.java" afterPath="$PROJECT_DIR$/src/TestThread2b.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2c.java" afterPath="$PROJECT_DIR$/src/TestThread2c.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TestThread2d.java" afterPath="$PROJECT_DIR$/src/TestThread2d.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,12 +77,12 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="SyncQueue.java" pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="525">
+      <file leaf-file-name="SyncQueue.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SyncQueue.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-324">
-              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="428">
+              <caret line="80" column="8" lean-forward="false" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -26,21 +91,61 @@
       <file leaf-file-name="QueueNode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/QueueNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="47" column="69" lean-forward="false" selection-start-line="47" selection-start-column="69" selection-end-line="47" selection-end-column="69" />
+            <state relative-caret-position="1323">
+              <caret line="52" column="14" lean-forward="true" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kernel.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Kernel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Kernel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="81" column="19" lean-forward="true" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+            <state relative-caret-position="169">
+              <caret line="91" column="0" lean-forward="true" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Scheduler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Scheduler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Scheduler.class" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Scheduler.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2673">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestThread2.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/TestThread2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-305">
+              <caret line="2" column="6" lean-forward="false" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test2.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Test2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="17" column="6" lean-forward="true" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -77,15 +182,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/SyncQueue.java" />
         <option value="$PROJECT_DIR$/src/QueueNode.java" />
         <option value="$PROJECT_DIR$/src/Kernel.java" />
+        <option value="$PROJECT_DIR$/src/SyncQueue.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="x" value="-1" />
+    <option name="y" value="-11" />
+    <option name="width" value="1922" />
+    <option name="height" value="1092" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -103,7 +210,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -133,7 +240,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -334,18 +441,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
+    <frame x="-1" y="-11" width="1922" height="1092" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897863" sideWeight="0.5021739" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897863" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32897863" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.58432305" sideWeight="0.4978261" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25543478" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26086956" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -377,11 +485,36 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/SyncQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/QueueNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1269">
+          <caret line="47" column="69" lean-forward="false" selection-start-line="47" selection-start-column="69" selection-end-line="47" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Kernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2133">
+          <caret line="81" column="19" lean-forward="true" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SyncQueue.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -409,45 +542,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/QueueNode.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-81">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Test2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="17" column="6" lean-forward="true" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TestThread2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-305">
+          <caret line="2" column="6" lean-forward="false" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Scheduler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1080">
+        <state relative-caret-position="54">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/QueueNode.class">
+    <entry file="file://$PROJECT_DIR$/src/Scheduler.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-81">
+        <state relative-caret-position="-2673">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SyncQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-324">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/QueueNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="47" column="69" lean-forward="false" selection-start-line="47" selection-start-column="69" selection-end-line="47" selection-end-column="69" />
+        <state relative-caret-position="1323">
+          <caret line="52" column="14" lean-forward="true" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Kernel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="81" column="19" lean-forward="true" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+        <state relative-caret-position="169">
+          <caret line="91" column="0" lean-forward="true" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SyncQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="80" column="8" lean-forward="false" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
