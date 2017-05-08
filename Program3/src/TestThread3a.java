@@ -1,11 +1,19 @@
 import java.util.Random;
 
 /**
- * Created by thuan on 06/05/17.
+ * @author Thuan Tran
+ * University of Washington Bothell
+ * CSS 430 Program 3
+ * Date: May 7th, 2017
  */
 public class TestThread3a extends Thread
 
 {
+    /**
+     * This method is used to generate a random number and perform a loop that add 1 to
+     * it 10 time
+     * After the loop, it prints out a signal saying that the computation finished
+     */
     public void run()
     {
         int random = new Random().nextInt(10);
