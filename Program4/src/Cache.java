@@ -8,6 +8,7 @@ import java.util.Vector;
  */
 public class Cache
 {
+    private int size;
     private Vector<Data> theCache;
     /**
      * Constructor for the Cache class that allow
@@ -17,13 +18,12 @@ public class Cache
      */
     public Cache(int blockSize, int cacheBlocks)
     {
-        theCache = new Vector<Data>(cacheBlocks);
-        for (int i = 0; i < cacheBlocks;i++)
+        size = cacheBlocks;
+        theCache = new Vector<Data>(size);
+        for (int i = 0; i < size; i++)
         {
-            Data newBlock = new Data();
-            newBlock.blockNumber = i;
-            newBlock.dirtyBit = false;
-            newBlock.referenceBit = false;
+            // Adding null element. Meaning this place is available;
+            Data newBlock = null;
             theCache.add(newBlock);
 
         }
@@ -37,6 +37,18 @@ public class Cache
      */
     public synchronized boolean read(int blockID, byte buffer[])
     {
+        for (int i = 0; i < size; i++)
+        {
+            Data theBlock = theCache.get(i);
+            if (theBlock.blockNumber == blockID)
+            {
+                System.arraycopy(theBlock.buff, 0, buffer, 0, size);
+                theBlock.referenceBit = true;
+
+                return true;
+            }
+        }
+        return false;
 
     }
 
@@ -48,13 +60,24 @@ public class Cache
      */
     public synchronized boolean write(int blockID, byte buffer[])
     {
+        for (int i = 0; i < size; i++)
+        {
+            Data theBlock = theCache.get(i);
+            if (theBlock.blockNumber == blockID)
+            {
+                System.arraycopy(buffer, 0, theBlock.buff, 0, size);
+                theBlock.referenceBit = true;
+                return true;
+            }
+        }
 
+        return false;
     }
 
     /**
      * This method is used to sync
      */
-    public void sync()
+    public synchronized void sync()
     {
 
     }
@@ -62,16 +85,23 @@ public class Cache
     /**
      * This method is used to flush all the data
      */
-    public void flush()
+    public synchronized void flush()
     {
 
     }
 
+    /**
+     * This class is used to represent a block that hold the data
+     * The block number (ID). And its bits to determine if it has updated or if it
+     * is being accessed
+     */
     private class Data
     {
+        // Data, ID, being accessed and updated
+        private byte[] buff = new byte[size];
         private int blockNumber;
-        private boolean referenceBit;
-        private boolean dirtyBit;
+        private boolean referenceBit = false;
+        private boolean dirtyBit = false;
     }
 
 
