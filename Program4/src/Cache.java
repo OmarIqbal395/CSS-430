@@ -2,9 +2,9 @@ import java.util.Vector;
 
 /**
  * @author Thuan Tran
- * University of Washing Bothell
- * CSS 430 Program 4
- * Sunday May 14,2017
+ *         University of Washing Bothell
+ *         CSS 430 Program 4
+ *         Sunday May 14,2017
  */
 public class Cache
 {
@@ -12,6 +12,7 @@ public class Cache
     private int size;
     private Vector<Data> theCache;
     private int pointerIndex; // Used for the second chance algorithm
+
     /**
      * Constructor for the Cache class that allow
      * how many block to be created and the size of each block
@@ -46,6 +47,7 @@ public class Cache
         for (int i = 0; i < size; i++)
         {
             Data theBlock = theCache.get(i);
+            // Already in the cache, just read it
             if (theBlock.blockNumber == blockID)
             {
                 System.arraycopy(theBlock.buff, 0, buffer, 0, bufferSize);
@@ -77,11 +79,14 @@ public class Cache
             SysLib.rawwrite(theCache.get(victim).blockNumber, theCache.get(victim).buff);
             theCache.get(victim).dirtyBit = false; // Reset the dirty bit to false
         }
+        // read from disk to cache
         SysLib.rawread(blockID, theCache.get(victim).buff);
+        // Write from cache to buffer
+        System.arraycopy(theCache.get(victim).buff, 0, buffer, 0, bufferSize);
         theCache.get(victim).referenceBit = true; // Just been used
         theCache.get(victim).blockNumber = blockID; // Update the block
         return true;
-        }
+    }
 
 
     /**
@@ -99,7 +104,7 @@ public class Cache
             Data theBlock = theCache.get(i);
             if (theBlock.blockNumber == blockID)
             {
-                System.arraycopy(buffer, 0, theBlock.buff, 0, size);
+                System.arraycopy(buffer, 0, theBlock.buff, 0, bufferSize);
                 theBlock.referenceBit = true;
                 theBlock.dirtyBit = true;
                 return true;
@@ -110,7 +115,7 @@ public class Cache
             Data theBlock = theCache.get(i);
             if (theBlock.blockNumber == -1)
             {
-                System.arraycopy(buffer, 0, theBlock.buff, 0, size);
+                System.arraycopy(buffer, 0, theBlock.buff, 0, bufferSize);
                 theBlock.referenceBit = true;
                 theBlock.blockNumber = blockID;
                 theBlock.dirtyBit = true;
@@ -124,7 +129,7 @@ public class Cache
             // need to write back to the disk before replacing it
             SysLib.rawwrite(theBlock.blockNumber, theBlock.buff);
         }
-        System.arraycopy(buffer, 0, theBlock.buff, 0, size);
+        System.arraycopy(buffer, 0, theBlock.buff, 0, bufferSize);
         theBlock.blockNumber = blockID;
         theBlock.referenceBit = true;
         theBlock.dirtyBit = true;
@@ -160,6 +165,7 @@ public class Cache
         SysLib.sync();
 
     }
+
     /**
      * This method is used to flush all the data
      * It will write back to the disk all of the information of the dirty bit
@@ -193,6 +199,7 @@ public class Cache
 
     /**
      * This is the implementation of the enhanced second chance algorithm
+     *
      * @return The index of the block we will use in the vector
      */
     private int findNextVictim()
@@ -206,22 +213,25 @@ public class Cache
 
             if (theCache.get(pointerIndex).referenceBit == false && theCache.get(pointerIndex).dirtyBit == false)
             {
+                int value = pointerIndex;
                 // Update to the next block before return
                 pointerIndex = (pointerIndex + 1) % theCache.size();
-                return pointerIndex;
+                return value;
             }
-            // if this happen, that means that we have gone through the vector cache 1 whole time
+            // if this happen, that means that we have gone through the vector cache 2 whole time
             // but still haven't find. So In this case, we will pick the first 0,1
-            if (loop == theCache.size())
+            if (loop == theCache.size() * 2)
             {
                 alreadyPassed = true;
             }
             if (alreadyPassed && theCache.get(pointerIndex).referenceBit == false && theCache.get(pointerIndex).dirtyBit)
             {
+                int value = pointerIndex;
                 // Use this one temporary and advance the Pointer
                 pointerIndex = (pointerIndex + 1) % theCache.size();
-                return pointerIndex;
+                return value;
             }
+            // Set this block to be NOT recently used
             theCache.get(pointerIndex).referenceBit = false;
             pointerIndex = (pointerIndex + 1) % theCache.size();
             loop++;
