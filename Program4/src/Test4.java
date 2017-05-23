@@ -31,7 +31,7 @@ public class Test4 extends Thread
         readTime = 0;
         writeTime = 0;
 
-        numberOfLoop = 250;
+        numberOfLoop = 400;
     }
 
     /**
@@ -172,7 +172,7 @@ public class Test4 extends Thread
         }
         long endTime = new Date().getTime();
         long elapsed = endTime - startTime;
-        writeTime = elapsed / 10;
+        writeTime = elapsed / numberOfLoop;
 
         byte[] empty = new byte[size];
         startTime = new Date().getTime();
@@ -188,7 +188,7 @@ public class Test4 extends Thread
         // Same like above. Calculate average time and check to see if they are equal
         endTime = new Date().getTime();
         elapsed = endTime - startTime;
-        readTime = elapsed / 10;
+        readTime = elapsed / numberOfLoop;
         if (!Arrays.equals(randomData, empty))
         {
             SysLib.cout("read and write are different " + "\n");
@@ -231,7 +231,7 @@ public class Test4 extends Thread
         }
         long endTime = new Date().getTime();
         long elapsed = endTime - startTime;
-        writeTime = elapsed / 20;
+        writeTime = elapsed / numberOfLoop;
 
         byte[] empty = new byte[size];
         startTime = new Date().getTime();
@@ -246,7 +246,7 @@ public class Test4 extends Thread
         }
         endTime = new Date().getTime();
         elapsed = endTime - startTime;
-        readTime = elapsed / 20;
+        readTime = elapsed / numberOfLoop;
         if (!Arrays.equals(randomData, empty))
         {
             SysLib.cout("read and write are different " + "\n");
@@ -264,18 +264,26 @@ public class Test4 extends Thread
         // Fill the array with random bytes
         new Random().nextBytes(randomData);
         long startTime = new Date().getTime();
-        for (int i = 1; i < numberOfLoop; i = i + 2)
+        for (int i = 1; i < numberOfLoop; i ++)
         {
-            helperWrite(i, randomData);
+            // access the block at different head, each block has 100 difference
+            for (int j = 1; j < 900; j = j+100)
+            {
+                helperWrite(j, randomData);
+            }
         }
         long endTime = new Date().getTime();
         long elapsed = endTime - startTime;
         writeTime = elapsed / numberOfLoop;
         byte[] empty = new byte[size];
         startTime = new Date().getTime();
-        for (int i = 1; i < numberOfLoop; i = i + 2)
+        for (int i = 1; i < numberOfLoop; i++)
         {
-            helperRead(i, empty);
+            for (int j = 1; j < 900; j = j+100)
+            {
+                helperRead(j, empty);
+            }
+
         }
         endTime = new Date().getTime();
         elapsed = endTime - startTime;
