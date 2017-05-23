@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="bd95f398-ccb4-4a52-9817-6707710d2847" name="Default" comment="">
+<<<<<<< Updated upstream
       <change type="DELETED" beforePath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Program1.dir/CXX.includecache" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Program1.dir/depend.internal" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../processes.cpp" afterPath="$PROJECT_DIR$/../processes.cpp" />
@@ -14,6 +16,17 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Makefile2" afterPath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Makefile2" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/clion-log.txt" afterPath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/clion-log.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Program1.dir/depend.make" afterPath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Program1.dir/depend.make" />
+=======
+<<<<<<< Updated upstream
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Part2/com/company/Program1/Shell.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/Program1/Shell.class" afterPath="$PROJECT_DIR$/src/com/company/Program1/Shell.class" />
+=======
+=======
+    <list default="true" id="bd95f398-ccb4-4a52-9817-6707710d2847" name="Default" comment="Finished the Shell">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/Program1/Shell.class" afterPath="$PROJECT_DIR$/src/com/company/Program1/Shell.class" />
+>>>>>>> master
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Program1.dir/build.make" afterPath="$PROJECT_DIR$/../cmake-build-debug/CMakeFiles/Program1.dir/build.make" />
     </list>
@@ -381,6 +394,12 @@
       <option name="project" value="LOCAL" />
       <updated>1491434423082</updated>
     </task>
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+    <option name="localTasksCounter" value="3" />
+=======
+>>>>>>> Stashed changes
     <task id="LOCAL-00003" summary="Almost done. Need to Wait for end of child process before start over">
       <created>1491603757382</created>
       <option name="number" value="00003" />
@@ -388,7 +407,23 @@
       <option name="project" value="LOCAL" />
       <updated>1491603757382</updated>
     </task>
+<<<<<<< Updated upstream
     <option name="localTasksCounter" value="4" />
+=======
+<<<<<<< HEAD
+    <task id="LOCAL-00004" summary="Finished the Shell">
+      <created>1491622459034</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1491622459034</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+=======
+    <option name="localTasksCounter" value="4" />
+>>>>>>> master
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     <servers />
   </component>
   <component name="ToolWindowManager">
