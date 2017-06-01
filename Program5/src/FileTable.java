@@ -1,7 +1,9 @@
 import java.util.Vector;
 
 /**
- * Created by thuan on 30/05/17.
+ * @author Thuan Tran
+ * CSS 430 Final Project
+ * May 31th, 2017
  */
 public class FileTable {
 
@@ -19,12 +21,76 @@ public class FileTable {
 
 
 
-    public synchronized FileTableEntry falloc( String filename, String mode ) {
+    public synchronized FileTableEntry falloc( String filename, String mode )
+    {
+        Inode newInode = null;
 
-        FileTableEntry newEntry = new FileTableEntry();
-        dir.ialloc(filename);
-        int nodeNumber = dir.namei(filename);
-        table.get(nodeNumber)++;
+        // Apple product, must have costs a ton
+        short iNumber = 0;
+        while(true) {
+
+                iNumber = dir.namei(filename);
+
+
+            if(iNumber >= 0) {
+                newInode = new Inode(iNumber);
+                // If we are trying to read the file and something is happening on the file
+                if(mode.equals("r") )
+                {
+
+                        if (newInode.flag != 0 && newInode.flag != 1)
+                        {
+                            try
+                            {
+                            wait();
+                        }
+                    catch(InterruptedException something)
+                        {
+                            SysLib.cout("Something bad happen")
+                        }
+                    }
+                    // Change the status of the file to being used
+                    newInode.flag = 1;
+                    break;
+                }
+
+                if(newInode.flag != 0 && newInode.flag != 3)
+                {
+                    if(newInode.flag == 1 || newInode.flag == 2)
+                    {
+                        newInode.flag = (short)(var4.flag + 3);
+                        newInode.toDisk(var3);
+                    }
+
+                    try {
+                        this.wait();
+                    } catch (InterruptedException var6) {
+                        ;
+                    }
+                    continue;
+                }
+
+                var4.flag = 2;
+                break;
+            }
+
+            if(var2.compareTo("r") == 0) {
+                return null;
+            }
+
+            var3 = this.dir.ialloc(var1);
+            var4 = new Inode();
+            var4.flag = 2;
+            break;
+        }
+
+        ++var4.count;
+        var4.toDisk(var3);
+        FileTableEntry var5 = new FileTableEntry(var4, var3, var2);
+        this.table.addElement(var5);
+        return var5;
+
+
 
 
 
@@ -36,7 +102,6 @@ public class FileTable {
     }
 
     public synchronized boolean ffree( FileTableEntry e ) {
-
 
 
 
