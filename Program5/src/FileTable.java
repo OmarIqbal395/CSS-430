@@ -24,14 +24,12 @@ public class FileTable {
     public synchronized FileTableEntry falloc( String filename, String mode )
     {
         Inode newInode = null;
-
         // Apple product, must have costs a ton
         short iNumber = 0;
-        while(true) {
+        while(true)
+        {
 
-                iNumber = dir.namei(filename);
-
-
+            iNumber = dir.namei(filename);
             if(iNumber >= 0) {
                 newInode = new Inode(iNumber);
                 // If we are trying to read the file and something is happening on the file
