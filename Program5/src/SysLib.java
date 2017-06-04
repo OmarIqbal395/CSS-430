@@ -6,6 +6,58 @@ public class SysLib {
 				 Kernel.EXEC, 0, args );
     }
 
+
+    // Added section into the SysLib method
+    // This just follow the Kernel.java where I see what parameter it needs
+    public static int close(int fd)
+    {
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.CLOSE, fd,
+                null);
+    }
+
+    public static int open(String filename, String mode)
+    {
+        String[] input = new String[2];
+        input[0] = filename;
+        input[1] = mode;
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.OPEN, 0, input);
+    }
+
+    public static int format(int files)
+    {
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.FORMAT, files, null);
+    }
+
+    public static int read(int fd, byte[] buffer)
+    {
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.READ, fd, buffer);
+    }
+
+    public static int write(int fd, byte[] buffer)
+    {
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.WRITE, fd, buffer);
+    }
+
+    public static int seek(int fd, int offset, int whence)
+    {
+        int[] input = new int[2];
+        input[0] = offset;
+        input[1] = whence;
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.SEEK, fd, input);
+    }
+
+    public static int delete(String filename)
+    {
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.DELETE, 0, filename);
+    }
+
+    public static int fsize(int fd)
+    {
+        return Kernel.interrupt(Kernel.INTERRUPT_SOFTWARE, Kernel.SIZE, fd, null);
+    }
+
+    // End of new section
+
     public static int join( ) {
         return Kernel.interrupt( Kernel.INTERRUPT_SOFTWARE,
 				 Kernel.WAIT, 0, null );

@@ -18,9 +18,6 @@ public class FileTable
         dir = directory;           // receive a reference to the Director
     }                             // from the file system
 
-    // major public methods
-
-
     /**
      * This method will allocate a table Entry (System wide) for a file, with different mod
      *
@@ -30,6 +27,15 @@ public class FileTable
      */
     public synchronized FileTableEntry falloc(String filename, String mode)
     {
+        // If invalid parameter passed in then return null;
+        if (filename == null || filename.length() == 0)
+        {
+            return null;
+        }
+        if (!(mode.equals("r") || mode.equals("w") || mode.equals("w+") || mode.equals("a")))
+        {
+            return null;
+        }
         // Apple product, must have costs a ton (iNode)
         Inode newInode = null;
 
@@ -39,63 +45,9 @@ public class FileTable
         {
             // Get the corresponding number for the iNode in the directory
             iNumber = dir.namei(filename);
-            // Yes, we have the Node
-            if (iNumber >= 0)
-            {
-                newInode = new Inode(iNumber);
-                // If we are trying to read the file and something is happening on the file
-                if (mode.equals("r"))
-                {
-                    // The node is available
-                    if (newInode.flag == 1 || newInode.flag == 0)
-                    {
-                        // Change the status of the file to being used
-                        newInode.flag = 1;
-                        break;
+            // If we do not have the node, then we need to create it
 
-                    }
-                    // The node is doing something else, need to wait for it until it changed
-                    else
-                    {
-                        if (newInode.flag == SPECIAL_CASE)
-                        {
-                            try
-                            {
-                                wait();
-                            } catch (InterruptedException except)
-                            {
-                                SysLib.cout("File is in special condition and error hapened");
-                            }
-                        }
-                    }
-                }
-                // We are trying to write or append
-                else
-                {
-                    if (newInode.flag == 0 || newInode.flag == 1)
-                    {
-                        // Indicate special case
-                        newInode.flag = SPECIAL_CASE;
-                        break;
-                    }
-                    // Wait for the node in special cases
-                    else
-                    {
-                        try
-                        {
-                            wait();
-
-                        } catch (InterruptedException except)
-                        {
-                            SysLib.cout("File is in special condition");
-                        }
-                    }
-                }
-
-
-            }
-            // Couldn't find a node => new file
-            else
+            if (iNumber < 0)
             {
                 // Will create a new inode when the system want to write to it
                 if (!(mode.equals("r")))
@@ -108,7 +60,67 @@ public class FileTable
                 {
                     return null;
                 }
+            } else
+            {
+
+
+                if (iNumber >= 0)
+                {
+                    newInode = new Inode(iNumber);
+                    // If we are trying to read the file and something is happening on the file
+                    if (mode.equals("r"))
+                    {
+                        // The node is available
+                        if (newInode.flag == 1 || newInode.flag == 0)
+                        {
+                            // Change the status of the file to being used
+                            newInode.flag = 1;
+                            break;
+
+                        }
+                        // The node is doing something else, need to wait for it until it changed
+                        else
+                        {
+                            if (newInode.flag == SPECIAL_CASE)
+                            {
+                                try
+                                {
+                                    wait();
+                                } catch (InterruptedException except)
+                                {
+                                    SysLib.cout("File is in special condition and error hapened");
+                                }
+                            }
+                        }
+                    }
+                    // We are trying to write or append
+                    else
+                    {
+                        if (newInode.flag == 0 || newInode.flag == 1)
+                        {
+                            // Indicate special case
+                            newInode.flag = SPECIAL_CASE;
+                            break;
+                        }
+                        // Wait for the node in special cases
+                        else
+                        {
+                            try
+                            {
+                                wait();
+
+                            } catch (InterruptedException except)
+                            {
+                                SysLib.cout("File is in special condition");
+                            }
+                        }
+                    }
+
+
+                }
             }
+            // Couldn't find a node => new file
+
         }
         newInode.count++;
         newInode.toDisk(iNumber);
