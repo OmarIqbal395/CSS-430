@@ -4,6 +4,7 @@
  *         Date: May 31th, 2017
  */
 
+
 public class Directory
 {
     private static int maxChars = 30; // max characters of each file name
@@ -18,6 +19,7 @@ public class Directory
      *
      * @param maxInumber max number of iNodes (Files) to be created
      */
+
 
     public Directory(int maxInumber)
     { // directory constructor
@@ -40,6 +42,7 @@ public class Directory
      * @param data the byte array that have the information of the directory
      * @return a 1 if it succeed, or a -1 if it fails
      */
+
     public int bytes2directory(byte data[])
     {
 
@@ -80,6 +83,7 @@ public class Directory
      * @return a byte array that represent the directory
      */
 
+
     public byte[] directory2bytes()
     {
 
@@ -117,6 +121,7 @@ public class Directory
      * @param filename The file to be put
      * @return the iNode number that correspond to the file
      */
+
 
     public short ialloc(String filename)
     {
@@ -173,6 +178,7 @@ public class Directory
      * @return the inode number that correspond to this file name
      */
 
+
     public short namei(String filename)
     {
 
@@ -196,6 +202,7 @@ public class Directory
         }
         // Invalid Data
         return -1;
+
 
     }
 }

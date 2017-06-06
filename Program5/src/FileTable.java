@@ -7,8 +7,6 @@ import java.util.Vector;
  */
 public class FileTable
 {
-    private final int SPECIAL_CASE = 2;
-
     private Vector table;         // the actual entity of this file table
     private Directory dir;        // the root directory
 
@@ -27,106 +25,90 @@ public class FileTable
      */
     public synchronized FileTableEntry falloc(String filename, String mode)
     {
-        // If invalid parameter passed in then return null;
-        if (filename == null || filename.length() == 0)
-        {
-            return null;
-        }
-        if (!(mode.equals("r") || mode.equals("w") || mode.equals("w+") || mode.equals("a")))
-        {
-            return null;
-        }
-        // Apple product, must have costs a ton (iNode)
-        Inode newInode = null;
+        Inode theINode = null;
 
-        short iNumber = 0;
-        // Since we do not know when we will be able to access the file, must be in an infinite loop
+        short iNumber;
         while (true)
         {
-            // Get the corresponding number for the iNode in the directory
-            iNumber = dir.namei(filename);
-            // If we do not have the node, then we need to create it
-
+            // If it is in the directory, then we need to get the information from the directory
+            // The iNumber that correspond to the DIrectory is 0, so that was easy
+            if (filename.equals("/"))
+            {
+                iNumber = 0;
+            } else
+            {
+                // Else we need to look for a file
+                iNumber = this.dir.namei(filename);
+            }
+            // If we could not find the corresponding file but the system want to read it
             if (iNumber < 0)
             {
-                // Will create a new inode when the system want to write to it
-                if (!(mode.equals("r")))
-                {
-                    short createOnDirectory = dir.ialloc(filename);
-                    newInode = new Inode(createOnDirectory);
-                    newInode.flag = SPECIAL_CASE;
-                    break;
-                } else
+                if (mode.equals("r"))
                 {
                     return null;
                 }
+
             } else
-            {
-
-
-                if (iNumber >= 0)
+            {   // Get the new inode given the number of it
+                theINode = new Inode(iNumber);
+                if (theINode.equals("r"))
                 {
-                    newInode = new Inode(iNumber);
-                    // If we are trying to read the file and something is happening on the file
-                    if (mode.equals("r"))
+                    // If they are not in a usable condition, then need to wait for change
+                    if (theINode.flag != 0 && theINode.flag != 1)
                     {
-                        // The node is available
-                        if (newInode.flag == 1 || newInode.flag == 0)
+                        try
                         {
-                            // Change the status of the file to being used
-                            newInode.flag = 1;
-                            break;
+                            wait();
+                        } catch (InterruptedException exception)
+                        {
 
                         }
-                        // The node is doing something else, need to wait for it until it changed
-                        else
-                        {
-                            if (newInode.flag == SPECIAL_CASE)
-                            {
-                                try
-                                {
-                                    wait();
-                                } catch (InterruptedException except)
-                                {
-                                    SysLib.cout("File is in special condition and error hapened");
-                                }
-                            }
-                        }
+                        continue;
                     }
-                    // We are trying to write or append
-                    else
-                    {
-                        if (newInode.flag == 0 || newInode.flag == 1)
-                        {
-                            // Indicate special case
-                            newInode.flag = SPECIAL_CASE;
-                            break;
-                        }
-                        // Wait for the node in special cases
-                        else
-                        {
-                            try
-                            {
-                                wait();
-
-                            } catch (InterruptedException except)
-                            {
-                                SysLib.cout("File is in special condition");
-                            }
-                        }
-                    }
-
-
+                    // Set the flag to being used
+                    theINode.flag = 1;
+                    break;
                 }
-            }
-            // Couldn't find a node => new file
+                // If they are in different mode (writing or appending),
+                // and the flag does not indicate a usable condition
+                if (theINode.flag != 0 && theINode.flag != 3)
+                {
+                    if (theINode.flag == 1 || theINode.flag == 2)
+                    {
+                        // Update the node to a written condition or append
+                        theINode.flag = (short) 4;
+                        theINode.toDisk(iNumber);
+                    }
+                    try
+                    {
+                        // Wait for completion
+                        this.wait();
+                    } catch (InterruptedException exception)
+                    {
 
+                    }
+                    continue;
+                }
+                // Set the mode back to being Read
+
+                theINode.flag = 2;
+                break;
+            }
+            // Allocate a new file in the directory and set the inode to 2 indicating being read
+            iNumber = dir.ialloc(filename);
+            theINode = new Inode();
+            theINode.flag = 2;
+            break;
         }
-        newInode.count++;
-        newInode.toDisk(iNumber);
-        FileTableEntry newEntry = new FileTableEntry(newInode, iNumber, mode);
-        this.table.addElement(newEntry);
-        return newEntry;
+        // Now there is one more File Table Entry poitning to the node
+        theINode.count++;
+        // Write it back to the disk
+        theINode.toDisk(iNumber);
+        FileTableEntry theEntry = new FileTableEntry(theINode, iNumber, mode);
+        // Update the table
+        table.addElement(theEntry);
+        return theEntry;
+
     }
 
     /**
@@ -139,18 +121,34 @@ public class FileTable
      */
     public synchronized boolean ffree(FileTableEntry e)
     {
-        // If invalid parameter or the table does not have the file, return false
-        if (e == null || !table.contains(e))
+
+
+        // If we successfully remove this file table entry
+        // Then we need to decrement the count of its inode
+        if (this.table.removeElement(e))
         {
-            return false;
+            Inode theCurrentNode = e.inode;
+            theCurrentNode.count--;
+            int flag = e.inode.flag;
+            // The node is being read or nothing much so reset to default condition
+            // In this condition, the iNode can be access
+            if (flag == 1 || flag == 2)
+            {
+                e.inode.flag = 0;
+            }
+            // Reset the node to being in a special condition so that future access take notice
+            if (flag == 4 || flag == 5)
+            {
+                e.inode.flag = 3;
+            }
+            theCurrentNode.toDisk(e.iNumber);
+            // Notify the waiting other File Table Entry that the iNode has changed
+            // So they might access it
+            notify();
+            return true;
         }
-        // Get the entry from the vector
-        FileTableEntry theEntry = (FileTableEntry) table.get(table.indexOf((FileTableEntry) e));
-        Inode theNode = theEntry.inode;
-        //write back to the disk and remove it from the table
-        theNode.toDisk(theEntry.iNumber);
-        table.remove(e);
-        return true;
+        return false;
+
     }
 
     /**
@@ -162,4 +160,5 @@ public class FileTable
     {
         return table.isEmpty();  // return if table is empty
     }                            // should be called before starting a format
+
 }

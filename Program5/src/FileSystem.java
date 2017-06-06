@@ -30,7 +30,9 @@ public class FileSystem
         if (dirSize > 0)
         {
             byte[] dirData = new byte[dirSize];
+
             read(dirEnt, dirData);
+            // Update the directory with the data that received from the buffer
             directory.bytes2directory(dirData);
         }
 
@@ -52,25 +54,15 @@ public class FileSystem
      * seek pointer -> initialized to zero -> mode: “r”, “w”, and “w+”
      * -> initialized at the end of the file -> mode: “a”
      *
-     * @param fileaname the name of the file to open
+     * @param filename the name of the file to open
      * @param mode      The mode to open the file
      * @return a File Table Entry that correspond to the file with the given mode
      */
 
     public FileTableEntry open(String filename, String mode)
     {
-        // Not in one of these mode => invalid mode
-        if (!mode.equals("a"))
-        {
-            if (!mode.equals("w"))
-            {
-                if (!mode.equals("w+"))
-                {
-                    if (!mode.equals("r"))
-                        return null; // invalid entry
-                }
-            }
-        }
+
+
         // Allocate the file in the File Table
         // Check if it is in write mode or not, if it is then we need to deallocate the block at the File Table Entry
         FileTableEntry retVal = filetable.falloc(filename, mode);
@@ -91,8 +83,9 @@ public class FileSystem
      * - return: number of bytes that have been read		OR negative error value
      * }
      *
-     * @param ftEnt the FileTableEntry to read from
-     * @return buffer the buffer to read the data into
+     * @param ftEnt  the FileTableEntry to read from
+     * @param buffer the buffer to read the data into
+     * @return an intger value indicating successful or not
      */
 
     public int read(FileTableEntry ftEnt, byte[] buffer)
@@ -104,7 +97,7 @@ public class FileSystem
         // Could not read if the File Table Entry has mode write or append
         if (ftEnt.mode.equals("w") || ftEnt.mode.equals("a")) return -1;
         // Check for invalid passed in parameter
-        if (buffer == null || buffer.length < 1)
+        if (buffer == null)
         {
             return -1;
         }
@@ -122,19 +115,21 @@ public class FileSystem
                 if (blockNum != -1)
                 {
 
-                    byte[] tempRead = new byte[512];
+                    byte[] tempRead = new byte[Disk.blockSize];
                     // Know the block location to read from, now load the data from disk
                     SysLib.rawread(blockNum, buffer);
 
-                    // How far we go itno
-                    int dataGetInto = ftEnt.seekPtr % 512;
-                    int remainingBlocks = 512 - dataGetInto;
+                    // How far we go in to
+
+
+                    int dataGetInto = ftEnt.seekPtr % Disk.blockSize;
+                    int remainingBlocks = Disk.blockSize - dataGetInto;
                     int remaining = fsize(ftEnt) - ftEnt.seekPtr;
 
 
                     int smallerBetweenBlockandData = Math.min(remainingBlocks, size);
                     // Check to see how much left we can read versus the size remaining
-                    sizeLeftToRead = Math.min(smallerBetweenBlockandData, remaining, )
+                    sizeLeftToRead = Math.min(smallerBetweenBlockandData, remaining);
 
 
                     System.arraycopy(tempRead, dataGetInto, buffer, trackDataRead, sizeLeftToRead);
@@ -149,16 +144,15 @@ public class FileSystem
                     // Invalid block location
                     break;
                 }
-                return trackDataRead;
+
             }
+            return trackDataRead;
 
         }
         // Default return value, if reached here, then no success
-        return -1;
 
 
     }
-
 
     /**
      * This method sync the data from the directory back to the disk
@@ -168,10 +162,11 @@ public class FileSystem
      */
     public void sync()
     {
-        // Get all the information from the directory first, inluding all files name and size
+        FileTableEntry tempEntry = open("/", "w");
+        // Get all the information from the directory first, including all files name and size
         byte[] temp = directory.directory2bytes();
         // Open the Table Entry that correspond to the directory
-        FileTableEntry tempEntry = open("/", "w");
+
         // Write back to the disk all the info from the directory
         write(tempEntry, temp);
         close(tempEntry);
@@ -200,12 +195,12 @@ public class FileSystem
         synchronized (ftEnt)
         {
             ftEnt.count--;
+            // This mean that no others threads are using it so we can remove it from the file
+            // table
             if (ftEnt.count <= 0)
             {
                 return filetable.ffree(ftEnt);
             }
-
-
             return true;
         }
     }
@@ -217,79 +212,88 @@ public class FileSystem
      * - SysLib.write increments the seek pointer by the number of bytes to have been written
      * - return value is the number of bytes that have been written	OR negative error value
      *
-     * @param entry  The FileTableEntry that we want to write the data into
+     * @param ftEnt  The FileTableEntry that we want to write the data into
      * @param buffer the buffer that has the data that need to be rewritten
      */
-    public int write(FileTableEntry entry, byte[] buffer)
+    public int write(FileTableEntry ftEnt, byte[] buffer)
     {
         // Check for invalid passed in parameter
-        if (entry == null || buffer == null)
+        if (ftEnt == null || buffer == null)
         {
             return -1;
         }
 
-        if (entry.mode == "r")
+        // We can not write to a table ftEnt that is read only, so return invalid code
+        if (ftEnt.mode.equals( "r"))
         {
             return -1;
         }
-        synchronized (entry)
+        synchronized (ftEnt)
         {
             int offset = 0;
             int size = buffer.length;
-
+            // Continue writing when we still have length in the buffer
             while (size > 0)
             {
-                int var6 = entry.inode.getBlockNumPointer(entry.seekPtr);
-                if (var6 == -1)
+                int blockPointerPointingTo = ftEnt.inode.getBlockNumPointer(ftEnt.seekPtr);
+                if (blockPointerPointingTo == -1)
                 {
-                    short var7 = (short) this.superblock.findFreeBlock();
-                    switch (entry.inode.registerTargetBlock(entry.seekPtr, var7))
+                    short availableFreeblock = (short) superblock.findFreeBlock();
+                    int result = ftEnt.inode.updateTheBlock(ftEnt.seekPtr, availableFreeblock);
+                    // Depending on the return value, we will have different ways to handle
+                    // When result = -3 , it means that the indirect block is unavaible albe
+                    // So we need to make use of it
+                    if (result == -3)
                     {
-                        case -3:
-                            short var8 = (short) this.superblock.getFreeBlock();
-                            if (!entry.inode.registerIndexBlock(var8))
-                            {
-                                SysLib.cerr("ThreadOS: panic on write\n");
-                                return -1;
-                            }
+                        // Find the nextfree block to be the indirect block of the current iNode
+                        short nextFreeBlock = (short) superblock.findFreeBlock();
+                        // If we could update the block we are writing too, ERRORRRRRR
 
-                            if (entry.inode.registerTargetBlock(entry.seekPtr, var7) != 0)
-                            {
-                                SysLib.cerr("ThreadOS: panic on write\n");
-                                return -1;
-                            }
-                        case 0:
-                        default:
-                            var6 = var7;
-                            break;
-                        case -2:
-                        case -1:
-                            SysLib.cerr("ThreadOS: filesystem panic on write\n");
+                        if (!ftEnt.inode.updateTheFreeBlock(nextFreeBlock))
+                        {
                             return -1;
+                        }
+                        // If We do not success update the block given the seek pointer
+                        if (ftEnt.inode.updateTheBlock(ftEnt.seekPtr, availableFreeblock) != 0)
+                        {
+                            return -1;
+                        }
+                    }
+                    // When result is 0, it means that we success finding the right position
+                    if (result == 0)
+                    {
+                        blockPointerPointingTo = availableFreeblock;
+                    }
+                    // This means that the direct pointer is no good
+                    if (result == -2 || result == -1)
+                    {
+                        return -1;
                     }
                 }
 
-                byte[] var13 = new byte[512];
-                if (SysLib.rawread(var6, var13) == -1)
+                // Okay, now we need to get the data of the block the pointer is pointing to
+                byte[] tempData = new byte[Disk.blockSize];
+                SysLib.rawread(blockPointerPointingTo, tempData);
+                // Hmm, where in the block should we point
+                int position = ftEnt.seekPtr % Disk.blockSize;
+                int remaining = Disk.blockSize - position;
+                // Remaming position that we can write, we do not want to write that is over the file
+                int availablePlace = Math.min(remaining, size);
+                System.arraycopy(buffer, offset, tempData, position, availablePlace);
+                SysLib.rawwrite(blockPointerPointingTo, tempData);
+                // Update the seek pointer poingting to the next location
+                ftEnt.seekPtr += availablePlace;
+                offset += availablePlace;
+                // Decrement the size meaning that we have used this much space in writing
+                size -= availablePlace;
+                // If we have surpase the length of the inode, then we need to change it
+                if (ftEnt.seekPtr > ftEnt.inode.length)
                 {
-                    System.exit(2);
-                }
-
-                int var14 = entry.seekPtr % 512;
-                int var9 = 512 - var14;
-                int var10 = Math.min(var9, size);
-                System.arraycopy(buffer, offset, var13, var14, var10);
-                SysLib.rawwrite(var6, var13);
-                entry.seekPtr += var10;
-                offset += var10;
-                size -= var10;
-                if (entry.seekPtr > entry.inode.length)
-                {
-                    entry.inode.length = entry.seekPtr;
+                    ftEnt.inode.length = ftEnt.seekPtr;
                 }
             }
-
-            entry.inode.toDisk(entry.iNumber);
+            // Update the inode
+            ftEnt.inode.toDisk(ftEnt.iNumber);
             return offset;
         }
 
@@ -317,21 +321,25 @@ public class FileSystem
         // Deallocate the indirect block
         byte[] data;
         int indirectStatus = ftEnt.inode.indirect;
+        // if the indirect is still in use, then we need to get its data first before invalidate it
         if (indirectStatus != -1)
         {
-            data = new byte[512];
+
+            data = new byte[Disk.blockSize];
             SysLib.rawread(indirectStatus, data);
+            // Invalidate it
             ftEnt.inode.indirect = -1;
         } else
         {
             data = null;
         }
+        // Now we get the data of the indirect block
         if (data != null)
         {
             byte offset = 0;
             // Get all the block that is pointed to by the indirect block
-            short blockID SysLib.bytes2short(data, offset);
-            // And make it free. Let it go, let it go
+            short blockID = SysLib.bytes2short(data, offset);
+            // And make it free. LET IT GO LET IT GO CAN'T HOLD IT BACK ANYMORE
             while (blockID != -1)
             {
                 superblock.addFreeBlock(blockID);
@@ -341,10 +349,17 @@ public class FileSystem
 
         // Since each iNode can only have 11 pointer; Free all the block that is pointed to
         for (short blockIndex = 0; blockIndex < 11; blockIndex++)
+        {     if(ftEnt.inode.direct[blockIndex] == -1)
+        {
+            // Do not free the block if the block at that location is invalid
+            continue;
+        }
+        else
         {
             superblock.addFreeBlock(ftEnt.inode.direct[blockIndex]);
             // Indicate that the block at this direct block is invalid
             ftEnt.inode.direct[blockIndex] = -1;
+        }
         }
 
         ftEnt.inode.toDisk(ftEnt.iNumber);
@@ -363,17 +378,17 @@ public class FileSystem
      * }
      * - successfully delete = 0
      *
-     * @param filename the Name of the file to be deleted
+     * @param fn the Name of the file to be deleted
      * @return a boolean variable indicating if delete success or not
      */
 
-    public boolean delete(String filename)
+    public boolean delete(String fn)
     {
         // Need to get the File Table Entry that has the file
         // Then get the i number which in turn point to the block that
         // need to be delete
         // Need to make sure that the file is close and free
-        FileTableEntry corresponding = open(filename, 'w');
+        FileTableEntry corresponding = open(fn, "w");
         short number = corresponding.iNumber;
         boolean closeSuccess = close(corresponding);
         boolean freeSuccess = directory.ifree(number);
@@ -396,7 +411,7 @@ public class FileSystem
      * @param ftEnt  The File Table Entry to seek the data
      * @param offset How far into it that we want to read
      * @param whence The Mode to read
-     * @return an integer indicating success or not
+     * @return an integer indicating the location of the seek, or -1 if fails
      */
 
 
@@ -414,7 +429,8 @@ public class FileSystem
 
             if (whence == SEEK_SET)
             {
-                if (offset <= fsize(ftEnt))
+                // If the mode is read at the beginning of the file, the offset need to be within a range
+                if (offset <= fsize(ftEnt) && offset >=0)
                 {
                     ftEnt.seekPtr = offset;
 
@@ -422,15 +438,19 @@ public class FileSystem
 
             } else if (whence == SEEK_CUR)
             {
-                if (ftEnt.seekPtr + offset <= fsize(ftEnt) && (ftEnt.seekPtr + offset >= 0))
+                // If the mode is reading from where the seek pointer is, the posiotn need to be
+                // Within the file size and greater than 0
+                if (ftEnt.seekPtr + offset <= fsize(ftEnt) && ((ftEnt.seekPtr + offset) >= 0))
 
                 {
+                    // Update the seek pointer to the next position
                     ftEnt.seekPtr += offset;
                 }
 
             } else if (whence == SEEK_END)
             {
 
+                // If we are trying to read from the end, then we need to make sure it is still in position
                 if (fsize(ftEnt) + offset >= 0 && fsize(ftEnt) + offset <= fsize(ftEnt))
                 {
 
@@ -438,14 +458,11 @@ public class FileSystem
                     ftEnt.seekPtr = fsize(ftEnt) + offset;
                 } else
                 {
-                    return -1
+                    return -1;
                 }
-            } else
-            {
-                return -1;
             }
 
-
+            // GEt the current FileTableEntry seek pointer
             return ftEnt.seekPtr;
         }
 
@@ -476,15 +493,15 @@ public class FileSystem
      */
     public int fsize(FileTableEntry ftEnt)
     {
-
+        if (ftEnt == null)
+        {
+            return -1;
+        }
         synchronized (ftEnt)
         {
-            if (ftEnt == null)
-            {
-                return -1;
-            }
-
-
             return ftEnt.inode.length;
         }
     }
+}
+
+

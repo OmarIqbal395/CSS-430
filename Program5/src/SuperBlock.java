@@ -24,10 +24,16 @@ public class SuperBlock
         }
     }
 
-    //----------------------------------------------------------------
-    public int sync()
+
+    /**
+     * THis method sync the data in the superblock to block 0 in the disk
+     *
+     */
+
+
+    public void sync()
     {
-        byte[] blockInfo = new byte[512];
+        byte[] blockInfo = new byte[Disk.blockSize];
 //Pass syslib.int2bytes the int, byte array and offset	
 //Since each int is 4 bytes. My offset increments by 4. 	
         SysLib.int2bytes(totalBlocks, blockInfo, 0);
@@ -92,7 +98,7 @@ public class SuperBlock
             {
                 byte[] blockInfo = new byte[Disk.blockSize];
                 SysLib.rawread(freeList, blockInfo);
-                int value = freeList;
+
                 // Get the next free block
                 freeList = SysLib.bytes2int(blockInfo, 0);
 
@@ -121,11 +127,11 @@ public class SuperBlock
             return;
         } else
         {
-            byte[] var2 = new byte[Disk.blockSize];
+            byte[] tempData = new byte[Disk.blockSize];
 
 
-            SysLib.int2bytes(freeList, var2, 0);
-            SysLib.rawwrite(blockNumber, var2);
+            SysLib.int2bytes(freeList, tempData, 0);
+            SysLib.rawwrite(blockNumber, tempData);
             freeList = blockNumber;
 
         }
